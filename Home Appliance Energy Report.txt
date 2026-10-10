@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+        double totalCost = 0;
+        for (int i = 0; i < n; i++) {
+            String appliance = sc.next();
+            double hours = sc.nextDouble();
+            boolean hasSaver = sc.hasNext("SAVER");
+            if (hasSaver) {
+                sc.next();
+            }
+            if (hasSaver && (appliance.equals("FRIDGE") || appliance.equals("TV"))) {
+                System.out.println(appliance + ": saver mode not supported");
+                continue;
+            }
+            double power = 0;
+            if (appliance.equals("FRIDGE")) {
+                power = 150;
+            } else if (appliance.equals("AC")) {
+                power = 1500;
+            } else if (appliance.equals("TV")) {
+                power = 100;
+            } else if (appliance.equals("WASHER")) {
+                power = 500;
+            }
+            double units = (power * hours) / 1000.0;
+            if (hasSaver) {
+                units *= 0.75;
+            }
+            double cost = units * 8;
+            totalCost += cost;
+            System.out.printf("%s: Units=%.2f Cost=%.2f\n", appliance, units, cost);
+        }
+        System.out.printf("Total Cost: %.2f\n", totalCost);
+    }
+}
